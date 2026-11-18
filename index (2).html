@@ -1,0 +1,2194 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>منظومة الشئون القانونية المصرية — الأداة المكتبية الذكية (استخراج شامل وأرشفة)</title>
+  <style>
+    :root {
+      --primary: #162b4d;
+      --primary-light: #234275;
+      --accent: #b8860b;
+      --accent-light: #fdf8eb;
+      --bg: #f3f5f8;
+      --surface: #ffffff;
+      --border: #d8dee9;
+      --text: #1c2430;
+      --muted: #5c687a;
+      --success: #1b6e44;
+      --success-bg: #eaf7f0;
+      --danger: #b42318;
+      --danger-bg: #fef3f2;
+      --warning: #9a6700;
+      --warning-bg: #fffbeb;
+      --radius: 8px;
+      --shadow: 0 2px 8px rgba(22, 43, 77, 0.06);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: "Segoe UI", Tahoma, Arial, "Traditional Arabic", sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.65;
+      font-size: 15px;
+    }
+
+    /* Header */
+    header {
+      background: var(--primary);
+      color: #fff;
+      padding: 16px 24px;
+      border-bottom: 4px solid var(--accent);
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .brand-badge {
+      width: 44px;
+      height: 44px;
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.12);
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 18px;
+      color: #ffd97d;
+    }
+
+    .brand h1 {
+      font-size: 19px;
+      font-weight: 700;
+      letter-spacing: 0.2px;
+    }
+
+    .brand p {
+      font-size: 12.5px;
+      color: #cbd5e1;
+    }
+
+    .header-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .status-pill {
+      background: rgba(27, 110, 68, 0.25);
+      border: 1px solid #34d399;
+      color: #a7f3d0;
+      padding: 4px 10px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .status-pill.offline {
+      background: rgba(180, 35, 24, 0.25);
+      border-color: #fda29b;
+      color: #fecdd3;
+    }
+
+    /* Container & Layout */
+    .container {
+      max-width: 1400px;
+      margin: 20px auto;
+      padding: 0 18px 40px;
+    }
+
+    .tabs {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 18px;
+      border-bottom: 2px solid var(--border);
+      padding-bottom: 8px;
+      flex-wrap: wrap;
+    }
+
+    .tab-btn {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 9px 18px;
+      border-radius: var(--radius);
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .tab-btn:hover {
+      border-color: var(--primary);
+    }
+
+    .tab-btn.active {
+      background: var(--primary);
+      color: #fff;
+      border-color: var(--primary);
+    }
+
+    .tab-panel {
+      display: none;
+    }
+
+    .tab-panel.active {
+      display: block;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1.05fr 0.95fr;
+      gap: 18px;
+    }
+
+    @media (max-width: 1024px) {
+      .grid-2 {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Cards */
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 18px 20px;
+      box-shadow: var(--shadow);
+      margin-bottom: 18px;
+    }
+
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 10px;
+      margin-bottom: 14px;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .card-title {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    /* Forms */
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+    }
+
+    @media (max-width: 720px) {
+      .form-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .form-group.full {
+      grid-column: 1 / -1;
+    }
+
+    label {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--primary);
+    }
+
+    input[type="text"],
+    input[type="date"],
+    select,
+    textarea {
+      width: 100%;
+      padding: 8px 11px;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      font-family: inherit;
+      font-size: 14px;
+      color: var(--text);
+      background: #fff;
+      transition: border-color 0.15s;
+    }
+
+    input:focus,
+    select:focus,
+    textarea:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 2px rgba(22, 43, 77, 0.1);
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 110px;
+      line-height: 1.7;
+    }
+
+    /* Buttons */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      padding: 8px 14px;
+      border-radius: 6px;
+      font-family: inherit;
+      font-size: 13.5px;
+      font-weight: 600;
+      cursor: pointer;
+      border: 1px solid transparent;
+      transition: all 0.15s;
+    }
+
+    .btn:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: #fff;
+    }
+
+    .btn-primary:hover:not(:disabled) {
+      background: var(--primary-light);
+    }
+
+    .btn-accent {
+      background: var(--accent);
+      color: #fff;
+    }
+
+    .btn-accent:hover:not(:disabled) {
+      filter: brightness(0.94);
+    }
+
+    .btn-outline {
+      background: #fff;
+      border-color: var(--border);
+      color: var(--text);
+    }
+
+    .btn-outline:hover:not(:disabled) {
+      border-color: var(--primary);
+      background: #f8fafc;
+    }
+
+    .btn-success {
+      background: var(--success);
+      color: #fff;
+    }
+
+    .btn-success:hover:not(:disabled) {
+      filter: brightness(0.95);
+    }
+
+    .btn-danger {
+      background: var(--danger-bg);
+      color: var(--danger);
+      border-color: #fecdca;
+    }
+
+    .btn-danger:hover:not(:disabled) {
+      background: #fee4e2;
+    }
+
+    .btn-sm {
+      padding: 5px 10px;
+      font-size: 12.5px;
+    }
+
+    .btn-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+    }
+
+    /* Dropzone & Attachments */
+    .dropzone {
+      border: 2px dashed #9fb0c7;
+      background: #f8fafc;
+      border-radius: var(--radius);
+      padding: 18px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.15s;
+      margin-bottom: 12px;
+    }
+
+    .dropzone:hover, .dropzone.dragover {
+      border-color: var(--primary);
+      background: #eef3fa;
+    }
+
+    .dropzone p {
+      font-size: 13px;
+      color: var(--muted);
+      margin-top: 4px;
+    }
+
+    /* Progress Bar */
+    .progress-box {
+      display: none;
+      background: #eef3fa;
+      border: 1px solid #c3d4ec;
+      border-radius: 6px;
+      padding: 10px 14px;
+      margin-bottom: 12px;
+    }
+
+    .progress-box.active {
+      display: block;
+    }
+
+    .progress-header {
+      display: flex;
+      justify-content: space-between;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 6px;
+    }
+
+    .progress-track {
+      width: 100%;
+      height: 8px;
+      background: #d5e0f0;
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      width: 0%;
+      background: var(--primary);
+      transition: width 0.2s ease;
+    }
+
+    .attachment-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-top: 10px;
+    }
+
+    .attachment-item {
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 10px 12px;
+      background: #fafbfd;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .attachment-meta {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .attachment-name {
+      font-weight: 700;
+      font-size: 13.5px;
+      color: var(--primary);
+    }
+
+    .attachment-info {
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    /* Table */
+    .table-wrap {
+      overflow-x: auto;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13.5px;
+      background: #fff;
+    }
+
+    th, td {
+      padding: 10px 12px;
+      border-bottom: 1px solid var(--border);
+      text-align: right;
+      vertical-align: middle;
+    }
+
+    th {
+      background: #f1f4f9;
+      color: var(--primary);
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    tr:hover td {
+      background: #f9fbfd;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 3px 8px;
+      border-radius: 12px;
+      font-size: 11.5px;
+      font-weight: 600;
+      background: #eef2f8;
+      color: var(--primary);
+      border: 1px solid #d0d9e8;
+    }
+
+    .badge-gold {
+      background: var(--accent-light);
+      color: #7c5800;
+      border-color: #ebd38a;
+    }
+
+    .badge-green {
+      background: var(--success-bg);
+      color: var(--success);
+      border-color: #a6f4c5;
+    }
+
+    /* Stats Bar */
+    .stats-bar {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+
+    @media (max-width: 820px) {
+      .stats-bar {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    .stat-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-right: 4px solid var(--primary);
+      border-radius: var(--radius);
+      padding: 12px 16px;
+      box-shadow: var(--shadow);
+    }
+
+    .stat-card.gold {
+      border-right-color: var(--accent);
+    }
+
+    .stat-card.green {
+      border-right-color: var(--success);
+    }
+
+    .stat-label {
+      font-size: 12.5px;
+      color: var(--muted);
+      font-weight: 600;
+    }
+
+    .stat-value {
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--primary);
+      margin-top: 2px;
+    }
+
+    /* Analysis Banner */
+    .analyze-action-bar {
+      background: linear-gradient(135deg, #162b4d 0%, #234275 100%);
+      color: #fff;
+      border-radius: 8px;
+      padding: 12px 16px;
+      margin-top: 12px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .analyze-action-bar p {
+      font-size: 13px;
+      color: #e2e8f0;
+    }
+
+    /* Preview & Modal */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.55);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+      z-index: 1000;
+    }
+
+    .modal-backdrop.open {
+      display: flex;
+    }
+
+    .modal {
+      background: #fff;
+      width: 100%;
+      max-width: 880px;
+      max-height: 90vh;
+      overflow-y: auto;
+      border-radius: var(--radius);
+      padding: 22px;
+      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.25);
+    }
+
+    .official-paper {
+      border: 1px solid #cbd5e1;
+      padding: 28px 34px;
+      background: #fff;
+      font-family: "Traditional Arabic", "Times New Roman", Arial, serif;
+      font-size: 17px;
+      line-height: 1.85;
+      color: #000;
+    }
+
+    .paper-header {
+      display: flex;
+      justify-content: space-between;
+      border-bottom: 2px solid #000;
+      padding-bottom: 10px;
+      margin-bottom: 18px;
+      font-weight: 700;
+      font-size: 15px;
+    }
+
+    .paper-title {
+      text-align: center;
+      font-size: 20px;
+      font-weight: 700;
+      text-decoration: underline;
+      margin: 14px 0 18px;
+    }
+
+    .paper-meta-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 18px;
+      font-size: 14.5px;
+    }
+
+    .paper-meta-table td {
+      border: 1px solid #444;
+      padding: 6px 10px;
+    }
+
+    .paper-section-title {
+      font-weight: 700;
+      font-size: 17.5px;
+      margin-top: 14px;
+      margin-bottom: 6px;
+      color: #000;
+    }
+
+    .paper-body {
+      white-space: pre-wrap;
+      text-align: justify;
+    }
+
+    .paper-sign {
+      margin-top: 32px;
+      display: flex;
+      justify-content: flex-end;
+      text-align: center;
+      font-weight: 700;
+    }
+
+    /* Toast */
+    .toast {
+      position: fixed;
+      bottom: 20px;
+      left: 20px;
+      background: var(--primary);
+      color: #fff;
+      padding: 10px 16px;
+      border-radius: 6px;
+      font-size: 13.5px;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.2);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s;
+      z-index: 2000;
+    }
+
+    .toast.show {
+      opacity: 1;
+    }
+
+    .helper-box {
+      background: var(--accent-light);
+      border: 1px solid #e6cf8b;
+      border-radius: 6px;
+      padding: 10px 14px;
+      font-size: 13px;
+      color: #5c4200;
+      margin-bottom: 12px;
+    }
+
+    /* Print Styling for Clean PDF Export */
+    @media print {
+      body {
+        background: #fff !important;
+        margin: 0 !important;
+        padding: 0 !important;
+      }
+      header, .tabs, .stats-bar, .no-print, .toast, .container {
+        display: none !important;
+      }
+      #print-area {
+        display: block !important;
+        width: 100% !important;
+        padding: 0 !important;
+        margin: 0 !important;
+      }
+      .official-paper {
+        border: none !important;
+        padding: 0 !important;
+        box-shadow: none !important;
+      }
+      @page {
+        size: A4;
+        margin: 18mm 16mm;
+      }
+    }
+
+    #print-area {
+      display: none;
+    }
+  </style>
+
+  <!-- محركات استخراج النصوص المدمجة (Word .docx / PDF / OCR للصور والشيتات المصورة / Excel) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.8.0/mammoth.browser.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+</head>
+<body>
+
+  <header class="no-print">
+    <div class="brand">
+      <div class="brand-badge">قانون</div>
+      <div>
+        <h1>منظومة الشئون القانونية المصرية — الأداة المكتبية الذكية</h1>
+        <p>استخراج تلقائي فوري • قراءة Word و PDF و OCR والشيتات • مرجعية شاملة • أرشفة وتصدير رسمي</p>
+      </div>
+    </div>
+    <div class="header-actions">
+      <span class="status-pill" id="engineStatusPill">● محركات الاستخراج جاهزة</span>
+      <button class="btn btn-outline btn-sm" onclick="exportBackupJSON()">تصدير نسخة احتياطية (JSON)</button>
+      <label class="btn btn-outline btn-sm" style="cursor:pointer; margin:0;">
+        استيراد نسخة (JSON)
+        <input type="file" id="importJsonInput" accept=".json" style="display:none" onchange="importBackupJSON(event)" />
+      </label>
+    </div>
+  </header>
+
+  <div class="container no-print">
+    <!-- Stats -->
+    <div class="stats-bar">
+      <div class="stat-card">
+        <div class="stat-label">إجمالي المحررات المؤرشفة</div>
+        <div class="stat-value" id="statTotal">0</div>
+      </div>
+      <div class="stat-card gold">
+        <div class="stat-label">رقم القيد المتسلسل التالي</div>
+        <div class="stat-value" id="statNextSeq">001</div>
+      </div>
+      <div class="stat-card green">
+        <div class="stat-label">مذكرات الرأي والتحقيقات</div>
+        <div class="stat-value" id="statAdmin">0</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">الدعاوى والأحكام والعقود</div>
+        <div class="stat-value" id="statLitigation">0</div>
+      </div>
+    </div>
+
+    <!-- Navigation Tabs -->
+    <div class="tabs">
+      <button class="tab-btn active" data-tab="tab-workspace" onclick="switchTab('tab-workspace', this)">1. استخراج المستندات والصياغة القانونية</button>
+      <button class="tab-btn" data-tab="tab-archive" onclick="switchTab('tab-archive', this)">2. سجل الأرشفة المتسلسل (<span id="archiveCountBadge">0</span>)</button>
+      <button class="tab-btn" data-tab="tab-templates" onclick="switchTab('tab-templates', this)">3. قوالب الصياغة التشريعية الجاهزة</button>
+    </div>
+
+    <!-- TAB 1: WORKSPACE -->
+    <div id="tab-workspace" class="tab-panel active">
+      <div class="grid-2">
+        <!-- Right Column: Smart Document Extraction & Metadata -->
+        <div>
+          <div class="card">
+            <div class="card-header">
+              <div class="card-title">أولاً: رفع المستندات واستخراج النصوص تلقائياً</div>
+              <div class="btn-group">
+                <button class="btn btn-outline btn-sm" onclick="mergeAllAttachments()">دمج المرفقات</button>
+                <button class="btn btn-danger btn-sm" onclick="clearAttachments()">مسح المرفقات</button>
+              </div>
+            </div>
+
+            <div class="dropzone" id="dropzone" onclick="document.getElementById('fileInput').click()">
+              <strong>اسحب المستندات هنا أو اضغط للاختيار (يدعم الرفع المتعدد)</strong>
+              <p>
+                <b>Word</b> (.docx, .doc) • <b>PDF</b> (نصي أو ممسوح ضوئياً Scan) • <b>الصور والشيتات المصورة</b> (.jpg, .png, .webp) • <b>Excel</b> (.xlsx, .xls) • <b>نصوص</b> (.txt)
+              </p>
+              <input type="file" id="fileInput" multiple accept=".docx,.doc,.pdf,.png,.jpg,.jpeg,.webp,.bmp,.xlsx,.xls,.csv,.txt,.md,.html" style="display:none" onchange="handleFilesUpload(event)" />
+            </div>
+
+            <!-- Live Extraction Progress -->
+            <div class="progress-box" id="extractionProgress">
+              <div class="progress-header">
+                <span id="progressLabel">جاري قراءة واستخراج محتوى المستند...</span>
+                <span id="progressPercent">0%</span>
+              </div>
+              <div class="progress-track">
+                <div class="progress-fill" id="progressFill"></div>
+              </div>
+            </div>
+
+            <div id="attachmentList" class="attachment-list"></div>
+
+            <div class="form-group full" style="margin-top:14px;">
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
+                <label for="extractedText">النص المستخرج أو المضاف يدوياً (مباشر وقابل للتعديل):</label>
+                <div class="btn-group">
+                  <button class="btn btn-outline btn-sm" onclick="addManualAttachment()">+ إضافة مرفق يدوي</button>
+                  <button class="btn btn-outline btn-sm" onclick="copyText('extractedText')">نسخ النص</button>
+                </div>
+              </div>
+              <textarea id="extractedText" rows="8" oninput="onManualTextInput()" placeholder="اكتب أو الصق النص هنا مباشرة، أو ارفع ملف Word / PDF / صورة وسيظهر النص هنا فوراً ويتم تحديث الحقول وتلقائي..."></textarea>
+            </div>
+
+            <!-- Prominent Analyze Content Bar -->
+            <div class="analyze-action-bar">
+              <div>
+                <strong style="font-size:14.5px; color:#ffd97d;">🔍 تحليل المحتوى المرفق واستخلاص الرأي القانوني</strong>
+                <p>يقوم بتصنيف المحرر، استخراج البيانات (الجهة/الدعوى/الخصوم)، وتوليد هيكل المذكرة القانونية فوراً.</p>
+              </div>
+              <div class="btn-group">
+                <button class="btn btn-accent" onclick="analyzeAttachedContentFull()">⚡ حلّل المحتوى وصغ الرد</button>
+                <button class="btn btn-outline btn-sm" onclick="copySmartPrompt()" style="color:var(--primary);">نسخ للتحليل المتعمق</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-header">
+              <div class="card-title">ثانياً: البيانات الوصفية والتصنيف التلقائي</div>
+              <span class="badge badge-gold" id="editingIndicator">قيد جديد (#001)</span>
+            </div>
+
+            <div class="form-grid">
+              <div class="form-group full">
+                <label for="docTitle">العنوان الاستدلالي الموجز (للأرشفة المتسلسلة) *</label>
+                <input type="text" id="docTitle" placeholder="مثال: رأي قانوني بشأن تظلم الموظف (...) من الجزاء الإداري" />
+              </div>
+
+              <div class="form-group">
+                <label for="docType">نوع المحرر / المطلوب</label>
+                <select id="docType">
+                  <option value="إفادة برأي قانوني على إحالة">إفادة برأي قانوني على إحالة</option>
+                  <option value="مذكرة تحقيق إداري (قانون 81 لسنة 2016)">مذكرة تحقيق إداري (قانون 81 لسنة 2016)</option>
+                  <option value="فحص تظلم إداري (قانون 81 لسنة 2016)">فحص تظلم إداري (قانون 81 لسنة 2016)</option>
+                  <option value="مذكرة تعاقدات ومناقصات (قانون 182 لسنة 2018)">مذكرة تعاقدات ومناقصات (قانون 182 لسنة 2018)</option>
+                  <option value="مراجعة عقد / كراسة شروط">مراجعة عقد / كراسة شروط</option>
+                  <option value="مذكرة دفاع لهيئة قضايا الدولة">مذكرة دفاع لهيئة قضايا الدولة</option>
+                  <option value="مذكرة بشأن حكم قضائي (طعن / تنفيذ)">مذكرة بشأن حكم قضائي (طعن / تنفيذ)</option>
+                  <option value="مذكرة عرض على لجنة فض المنازعات">مذكرة عرض على لجنة فض المنازعات</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="lawRef">المرجعية التشريعية الحاكمة</label>
+                <select id="lawRef">
+                  <option value="كل ما سبق شامل (قانون الخدمة المدنية 81 لسنة 2016، قانون التعاقدات 182 لسنة 2018، وقانون مجلس الدولة وقواعد هيئة قضايا الدولة والقانون المدني)">كل ما سبق شامل (قانون 81 + قانون 182 + مجلس الدولة وقضايا الدولة + القانون المدني)</option>
+                  <option value="قانون الخدمة المدنية رقم 81 لسنة 2016 ولائحته التنفيذية">قانون الخدمة المدنية رقم 81 لسنة 2016</option>
+                  <option value="قانون التعاقدات العامة رقم 182 لسنة 2018 ولائحته التنفيذية">قانون التعاقدات رقم 182 لسنة 2018</option>
+                  <option value="قانون مجلس الدولة رقم 47 لسنة 1972 وقواعد هيئة قضايا الدولة">قانون مجلس الدولة 47 / 1972 وقضايا الدولة</option>
+                  <option value="القانون المدني وقانون المرافعات المدنية والتجارية">القانون المدني وقانون المرافعات</option>
+                  <option value="قانون لجان التوفيق في بعض المنازعات رقم 7 لسنة 2000">قانون فض المنازعات رقم 7 لسنة 2000</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="senderEntity">الجهة الوارد منها (من)</label>
+                <input type="text" id="senderEntity" placeholder="مثال: مكتب السيد رئيس الهيئة / الإدارة الهندسية" />
+              </div>
+
+              <div class="form-group">
+                <label for="recipientEntity">الجهة الموجه إليها الرد (المخاطَب)</label>
+                <input type="text" id="recipientEntity" placeholder="مثال: السيد الأستاذ / السلطة المختصة" />
+              </div>
+
+              <div class="form-group">
+                <label for="referralNumber">رقم الوارد / الإحالة</label>
+                <input type="text" id="referralNumber" placeholder="مثال: وارد 1452 لسنة 2026" />
+              </div>
+
+              <div class="form-group">
+                <label for="referralDate">تاريخ الإحالة / المحرر</label>
+                <input type="date" id="referralDate" />
+              </div>
+
+              <div class="form-group full">
+                <label for="signerInfo">اسم وصفة الموقّع وتأشيرته</label>
+                <input type="text" id="signerInfo" placeholder="مثال: السيد / مدير عام الشئون القانونية — تأشيرة: يُفحص ويُعرض بالرأي القانوني" />
+              </div>
+
+              <div class="form-group">
+                <label for="courtCircle">اسم المحكمة والدائرة (إن وجد)</label>
+                <input type="text" id="courtCircle" placeholder="مثال: محكمة القضاء الإداري - الدائرة الثانية" />
+              </div>
+
+              <div class="form-group">
+                <label for="caseNumber">رقم الدعوى والسنة القضائية</label>
+                <input type="text" id="caseNumber" placeholder="مثال: الدعوى رقم 12345 لسنة 78 ق" />
+              </div>
+
+              <div class="form-group">
+                <label for="plaintiffName">اسم المدعي / الطاعن</label>
+                <input type="text" id="plaintiffName" placeholder="اسم المدعي" />
+              </div>
+
+              <div class="form-group">
+                <label for="defendantName">اسم المدعى عليه / المطعون ضده</label>
+                <input type="text" id="defendantName" placeholder="مثال: السيد رئيس مجلس الإدارة بصفته" />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Left Column: Legal Drafting & Export -->
+        <div>
+          <div class="card">
+            <div class="card-header">
+              <div class="card-title">ثالثاً: الصياغة القانونية الرسمية (الرد / المذكرة)</div>
+              <div class="btn-group">
+                <button class="btn btn-accent btn-sm" onclick="generateFormalDraftTemplate(true)">إعادة توليد الصياغة</button>
+                <button class="btn btn-outline btn-sm" onclick="copySmartPrompt()">نسخ برومبت AI</button>
+              </div>
+            </div>
+
+            <div class="helper-box">
+              <strong>التوجيه الذكي:</strong> تم ربط الإدخال اليدوي والرفع المباشر بحيث تتحدث الحقول تلقائياً. يمكنك الضغط على <b>«⚡ حلّل المحتوى وصغ الرد»</b> في أي وقت لتحديث المذكرة الرسمية وتوليدها بالكامل.
+            </div>
+
+            <div class="form-group full" style="margin-bottom:12px;">
+              <label for="execSummary">ملخص الرأي القانوني التنفيذي (التوصية المباشرة):</label>
+              <textarea id="execSummary" rows="3" placeholder="خلاصة الرأي القانوني والتوصية التنفيذية في سطور مركزة..."></textarea>
+            </div>
+
+            <div class="form-group full" style="margin-bottom:12px;">
+              <label for="legalFacts">أولاً: الوقائع:</label>
+              <textarea id="legalFacts" rows="5" placeholder="تتحصل وقائع الموضوع في أنه بتاريخ..."></textarea>
+            </div>
+
+            <div class="form-group full" style="margin-bottom:12px;">
+              <label for="legalReasoning">ثانياً: الأساس القانوني والتسبيب (الدفوع والرد القانوني):</label>
+              <textarea id="legalReasoning" rows="7" placeholder="حيث إنه عن الأساس القانوني، فإنه من المقرر وفقاً لنص المادة (...) من القانون رقم (...) لسنة (...) أن..."></textarea>
+            </div>
+
+            <div class="form-group full" style="margin-bottom:14px;">
+              <label for="legalConclusion">ثالثاً: الرأي / الطلبات الختامية:</label>
+              <textarea id="legalConclusion" rows="3" placeholder="لذلك؛ نرى التفضل بالموافقة على... / نلتمس من عدالة المحكمة الحكم بـ..."></textarea>
+            </div>
+
+            <div class="form-grid" style="margin-bottom:16px;">
+              <div class="form-group">
+                <label for="drafterName">مُعد المذكرة (الاسم والدرجة)</label>
+                <input type="text" id="drafterName" placeholder="الأستاذ / ... — باحث قانوني أول" />
+              </div>
+              <div class="form-group">
+                <label for="approverName">المُعتمد (مدير عام الشئون القانونية)</label>
+                <input type="text" id="approverName" placeholder="الأستاذ / ... — مدير عام الشئون القانونية" />
+              </div>
+            </div>
+
+            <!-- Action Bar -->
+            <div class="btn-group" style="border-top:1px solid var(--border); padding-top:14px; justify-content:space-between;">
+              <div class="btn-group">
+                <button class="btn btn-success" onclick="saveCurrentRecord()">💾 حفظ في سجل الأرشفة</button>
+                <button class="btn btn-outline" onclick="resetForm()">+ محرر جديد</button>
+              </div>
+              <div class="btn-group">
+                <button class="btn btn-outline" onclick="previewCurrentRecord()">👁 معاينة رسمية</button>
+                <button class="btn btn-primary" onclick="exportCurrentWord()">📄 تنزيل Word (.doc)</button>
+                <button class="btn btn-accent" onclick="exportCurrentPDF()">🖨 تصدير / طباعة PDF</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 2: ARCHIVE LEDGER -->
+    <div id="tab-archive" class="tab-panel">
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">سجل الأرشفة القانوني المتسلسل</div>
+          <div class="btn-group">
+            <input type="text" id="archiveSearch" placeholder="بحث برقم القيد، العنوان، الجهة، أو رقم الدعوى..." style="width:290px;" oninput="renderArchiveTable()" />
+            <select id="archiveFilterType" style="width:210px;" onchange="renderArchiveTable()">
+              <option value="">كل أنواع المحررات</option>
+              <option value="إفادة برأي قانوني على إحالة">إفادة برأي قانوني</option>
+              <option value="مذكرة تحقيق إداري">مذكرة تحقيق إداري</option>
+              <option value="فحص تظلم إداري">فحص تظلم إداري</option>
+              <option value="مذكرة تعاقدات ومناقصات">مذكرة تعاقدات (ق 182)</option>
+              <option value="مراجعة عقد">مراجعة عقد / كراسة شروط</option>
+              <option value="مذكرة دفاع">مذكرة دفاع قضايا الدولة</option>
+              <option value="مذكرة بشأن حكم قضائي">مذكرة حكم قضائي</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th style="width:80px;">رقم القيد</th>
+                <th style="width:110px;">التاريخ</th>
+                <th>العنوان الاستدلالي للمحتوى</th>
+                <th>نوع المحرر</th>
+                <th>الجهة المخاطَبة / الواردة</th>
+                <th style="width:95px;">المرفقات</th>
+                <th style="width:265px;">إجراءات التحكم والتصدير</th>
+              </tr>
+            </thead>
+            <tbody id="archiveTableBody">
+              <tr>
+                <td colspan="7" style="text-align:center; color:var(--muted); padding:24px;">لا توجد سجلات محفوظة بعد. ابدأ بإنشاء محرر جديد وحفظه في السجل.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 3: LEGISLATIVE TEMPLATES -->
+    <div id="tab-templates" class="tab-panel">
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">مكتبة الصياغة القانونية المصرية الجاهزة (إدراج فوري في المحرر)</div>
+        </div>
+        <div class="form-grid">
+          <div class="card" style="margin:0; background:#fafbfd;">
+            <h4 style="color:var(--primary); margin-bottom:6px;">1. نموذج فحص تظلم إداري (المادة 65 من قانون 81 لسنة 2016)</h4>
+            <p style="font-size:13px; color:var(--muted); margin-bottom:10px;">صياغة منضبطة لفحص الشكل (ميعاد الستين يوماً) والموضوع في التظلمات من القرارات الإدارية والجزاءات التأديبية.</p>
+            <button class="btn btn-primary btn-sm" onclick="applyPresetTemplate('grievance81')">استخدام هذا القالب في المحرر</button>
+          </div>
+
+          <div class="card" style="margin:0; background:#fafbfd;">
+            <h4 style="color:var(--primary); margin-bottom:6px;">2. مذكرة تصرف في تحقيق إداري (المواد 57 - 62 من قانون 81 لسنة 2016)</h4>
+            <p style="font-size:13px; color:var(--muted); margin-bottom:10px;">بيان المخالفة المنسوبة، أقوال المحال، ثبوت المخالفة أو انتفاؤها، واقتراح الجزاء المناسب في حدود النصاب القانوني.</p>
+            <button class="btn btn-primary btn-sm" onclick="applyPresetTemplate('investigation81')">استخدام هذا القالب في المحرر</button>
+          </div>
+
+          <div class="card" style="margin:0; background:#fafbfd;">
+            <h4 style="color:var(--primary); margin-bottom:6px;">3. مذكرة تطبيق غرامة تأخير أو فسخ عقد (قانون 182 لسنة 2018)</h4>
+            <p style="font-size:13px; color:var(--muted); margin-bottom:10px;">تطبيق أحكام المادتين (48) و(50) من قانون التعاقدات العامة بشأن حساب غرامات التأخير ومصادرة التأمين النهائي.</p>
+            <button class="btn btn-primary btn-sm" onclick="applyPresetTemplate('contract182')">استخدام هذا القالب في المحرر</button>
+          </div>
+
+          <div class="card" style="margin:0; background:#fafbfd;">
+            <h4 style="color:var(--primary); margin-bottom:6px;">4. مذكرة دفاع لهيئة قضايا الدولة (مجلس الدولة)</h4>
+            <p style="font-size:13px; color:var(--muted); margin-bottom:10px;">إعداد الرد الموضوعي والدفوع الشكلية (عدم القبول لانتفاء القرار الإداري أو فوات الميعاد) مشفوعة بالمستندات.</p>
+            <button class="btn btn-primary btn-sm" onclick="applyPresetTemplate('stateLawsuits')">استخدام هذا القالب في المحرر</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PREVIEW MODAL -->
+  <div class="modal-backdrop no-print" id="previewModal" onclick="if(event.target===this) closePreviewModal()">
+    <div class="modal">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px; border-bottom:1px solid var(--border); padding-bottom:10px;">
+        <strong style="color:var(--primary); font-size:16px;">معاينة المحرر القانوني الرسمي قبل التصدير</strong>
+        <div class="btn-group">
+          <button class="btn btn-primary btn-sm" onclick="exportPreviewedWord()">📄 تنزيل Word</button>
+          <button class="btn btn-accent btn-sm" onclick="printPreviewedPDF()">🖨 طباعة / PDF</button>
+          <button class="btn btn-outline btn-sm" onclick="closePreviewModal()">إغلاق</button>
+        </div>
+      </div>
+      <div id="previewContainer"></div>
+    </div>
+  </div>
+
+  <!-- DEDICATED PRINT AREA -->
+  <div id="print-area"></div>
+
+  <!-- TOAST -->
+  <div class="toast" id="toast"></div>
+
+  <script>
+    const STORAGE_KEY = "egy_legal_workspace_records_v3";
+    let records = [];
+    let currentAttachments = [];
+    let editingRecordId = null;
+    let activePreviewRecord = null;
+    let autoTypingTimer = null;
+
+    // Configure PDF.js worker if loaded
+    if (window.pdfjsLib) {
+      pdfjsLib.GlobalWorkerOptions.workerSrc =
+        "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";
+    }
+
+    // Initialize
+    document.addEventListener("DOMContentLoaded", () => {
+      loadRecords();
+      setTodayDate();
+      setupDropzone();
+      renderAttachments();
+      renderArchiveTable();
+      updateStats();
+      checkEnginesAvailability();
+    });
+
+    function checkEnginesAvailability() {
+      const pill = document.getElementById("engineStatusPill");
+      const hasWord = typeof window.mammoth !== "undefined";
+      const hasPdf = typeof window.pdfjsLib !== "undefined";
+      const hasOcr = typeof window.Tesseract !== "undefined";
+      if (hasWord && hasPdf && hasOcr) {
+        pill.textContent = "● محركات الاستخراج (Word + PDF + OCR عربي + Excel) نشطة";
+        pill.classList.remove("offline");
+      } else {
+        pill.textContent = "● وضع أوفلاين (يُرجى الاتصال بالإنترنت عند أول فتح لتفعيل قارئ PDF/OCR)";
+        pill.classList.add("offline");
+      }
+    }
+
+    function setTodayDate() {
+      const today = new Date().toISOString().split("T")[0];
+      const dateEl = document.getElementById("referralDate");
+      if (dateEl && !dateEl.value) {
+        dateEl.value = today;
+      }
+    }
+
+    function showToast(msg) {
+      const el = document.getElementById("toast");
+      if (!el) return;
+      el.textContent = msg;
+      el.classList.add("show");
+      clearTimeout(el._timer);
+      el._timer = setTimeout(() => el.classList.remove("show"), 3600);
+    }
+
+    function setProgress(active, label = "", percent = 0) {
+      const box = document.getElementById("extractionProgress");
+      if (!box) return;
+      if (!active) {
+        box.classList.remove("active");
+        return;
+      }
+      box.classList.add("active");
+      document.getElementById("progressLabel").textContent = label;
+      document.getElementById("progressPercent").textContent = `${Math.round(percent)}%`;
+      document.getElementById("progressFill").style.width = `${Math.min(100, Math.max(0, percent))}%`;
+    }
+
+    function switchTab(tabId, btn) {
+      document.querySelectorAll(".tab-panel").forEach(p => p.classList.remove("active"));
+      document.querySelectorAll(".tab-btn").forEach(b => b.classList.remove("active"));
+      const target = document.getElementById(tabId);
+      if (target) target.classList.add("active");
+      if (btn) btn.classList.add("active");
+    }
+
+    // Storage Management
+    function loadRecords() {
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        records = raw ? JSON.parse(raw) : [];
+      } catch (e) {
+        records = [];
+      }
+    }
+
+    function persistRecords() {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(records));
+      updateStats();
+      renderArchiveTable();
+    }
+
+    function getNextSeqNumber() {
+      if (records.length === 0) return "001";
+      const maxNum = records.reduce((max, r) => {
+        const n = parseInt(r.seq, 10);
+        return isNaN(n) ? max : Math.max(max, n);
+      }, 0);
+      return String(maxNum + 1).padStart(3, "0");
+    }
+
+    function updateStats() {
+      const statTotal = document.getElementById("statTotal");
+      const archiveCountBadge = document.getElementById("archiveCountBadge");
+      const statNextSeq = document.getElementById("statNextSeq");
+      const editingIndicator = document.getElementById("editingIndicator");
+      const statAdmin = document.getElementById("statAdmin");
+      const statLitigation = document.getElementById("statLitigation");
+
+      if (statTotal) statTotal.textContent = records.length;
+      if (archiveCountBadge) archiveCountBadge.textContent = records.length;
+      const nextSeq = getNextSeqNumber();
+      if (statNextSeq) statNextSeq.textContent = nextSeq;
+      if (editingIndicator && !editingRecordId) {
+        editingIndicator.textContent = `قيد جديد (#${nextSeq})`;
+      }
+
+      const adminCount = records.filter(r =>
+        (r.docType || "").includes("رأي") ||
+        (r.docType || "").includes("تحقيق") ||
+        (r.docType || "").includes("تظلم")
+      ).length;
+      const litCount = records.length - adminCount;
+      if (statAdmin) statAdmin.textContent = adminCount;
+      if (statLitigation) statLitigation.textContent = litCount;
+    }
+
+    // Drag & Drop + Multi-Format File Extraction
+    function setupDropzone() {
+      const dz = document.getElementById("dropzone");
+      if (!dz) return;
+      dz.addEventListener("dragover", e => {
+        e.preventDefault();
+        dz.classList.add("dragover");
+      });
+      dz.addEventListener("dragleave", () => dz.classList.remove("dragover"));
+      dz.addEventListener("drop", e => {
+        e.preventDefault();
+        dz.classList.remove("dragover");
+        if (e.dataTransfer.files && e.dataTransfer.files.length) {
+          processFiles(e.dataTransfer.files);
+        }
+      });
+    }
+
+    function handleFilesUpload(event) {
+      if (event.target.files && event.target.files.length) {
+        processFiles(event.target.files);
+        event.target.value = "";
+      }
+    }
+
+    async function processFiles(fileList) {
+      const files = Array.from(fileList);
+      for (let i = 0; i < files.length; i++) {
+        const file = files[i];
+        const ext = (file.name.split(".").pop() || "").toLowerCase();
+        setProgress(true, `جاري استخراج محتوى: ${file.name} (${i + 1}/${files.length})`, 10);
+
+        try {
+          let extracted = "";
+          let methodLabel = "مستند";
+
+          if (ext === "docx") {
+            methodLabel = "Word (.docx)";
+            extracted = await extractDocxText(file);
+          } else if (ext === "doc") {
+            methodLabel = "Word (.doc)";
+            extracted = await extractLegacyDocText(file);
+          } else if (ext === "pdf") {
+            methodLabel = "ملف PDF";
+            extracted = await extractPdfTextWithOcrFallback(file);
+          } else if (["png", "jpg", "jpeg", "webp", "bmp", "tif", "tiff"].includes(ext) || file.type.startsWith("image/")) {
+            methodLabel = "صورة / شيت مصور (OCR)";
+            extracted = await extractImageOcrText(file);
+          } else if (["xlsx", "xls", "ods"].includes(ext)) {
+            methodLabel = "جدول بيانات Excel";
+            extracted = await extractExcelText(file);
+          } else {
+            methodLabel = "مستند نصي";
+            extracted = await readFileAsText(file);
+          }
+
+          const cleanText = (extracted || "").trim();
+          currentAttachments.push({
+            id: Date.now() + Math.random(),
+            name: file.name,
+            size: formatBytes(file.size),
+            type: methodLabel,
+            text: cleanText || "[لم يُعثر على نص مقروء داخل الملف]"
+          });
+
+          renderAttachments();
+          if (cleanText) {
+            appendExtractedText(file.name, cleanText);
+            showToast(`تم استخراج النص بنجاح من: ${file.name}`);
+            // Trigger auto classification on successful extraction
+            autoClassifyFromText(true);
+          } else {
+            showToast(`تم إرفاق (${file.name}) ولكن لم يُعثر على نص واضح داخله.`);
+          }
+        } catch (err) {
+          console.error(err);
+          showToast(`حدث خطأ أثناء قراءة (${file.name}): ${err.message || "يرجى المحاولة مرة أخرى"}`);
+        }
+      }
+      setProgress(false);
+    }
+
+    function readFileAsText(file) {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = e => resolve(e.target.result || "");
+        reader.onerror = () => reject(new Error("تعذرت قراءة الملف النصي"));
+        reader.readAsText(file, "UTF-8");
+      });
+    }
+
+    function readFileAsArrayBuffer(file) {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = e => resolve(e.target.result);
+        reader.onerror = () => reject(new Error("تعذرت قراءة بيانات الملف"));
+        reader.readAsArrayBuffer(file);
+      });
+    }
+
+    // 1. Extract Word (.docx) using Mammoth
+    async function extractDocxText(file) {
+      if (!window.mammoth) {
+        throw new Error("مكتبة قراءة Word غير محملة");
+      }
+      setProgress(true, `تحليل مستند Word: ${file.name}...`, 45);
+      const arrayBuffer = await readFileAsArrayBuffer(file);
+      const result = await mammoth.extractRawText({ arrayBuffer });
+      setProgress(true, `اكتمل استخراج Word: ${file.name}`, 100);
+      return result.value || "";
+    }
+
+    // Fallback for legacy binary .doc files
+    async function extractLegacyDocText(file) {
+      const arrayBuffer = await readFileAsArrayBuffer(file);
+      const decoderUtf16 = new TextDecoder("utf-16le", { fatal: false });
+      const rawUtf16 = decoderUtf16.decode(arrayBuffer);
+      const arabicMatches = rawUtf16.match(/[؀-ۿ0-9\s،؛؟.\-\/\(\):]{12,}/g);
+      if (arabicMatches && arabicMatches.length) {
+        return arabicMatches.join("
+").replace(/\s{3,}/g, "
+").trim();
+      }
+      const decoderUtf8 = new TextDecoder("utf-8", { fatal: false });
+      const rawUtf8 = decoderUtf8.decode(arrayBuffer);
+      const fallbackMatches = rawUtf8.match(/[؀-ۿ0-9\s،؛؟.\-\/\(\):]{12,}/g);
+      return fallbackMatches ? fallbackMatches.join("
+").trim() : "";
+    }
+
+    // 2. Extract PDF (Digital Text + Automatic OCR Fallback for Scanned PDFs)
+    async function extractPdfTextWithOcrFallback(file) {
+      if (!window.pdfjsLib) {
+        throw new Error("مكتبة قراءة PDF غير محملة");
+      }
+      const arrayBuffer = await readFileAsArrayBuffer(file);
+      const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
+      const totalPages = pdf.numPages;
+      let fullText = "";
+
+      for (let pageNum = 1; pageNum <= totalPages; pageNum++) {
+        const pct = Math.round(((pageNum - 1) / totalPages) * 90) + 5;
+        setProgress(true, `قراءة صفحة ${pageNum} من ${totalPages} (${file.name})...`, pct);
+
+        const page = await pdf.getPage(pageNum);
+        const textContent = await page.getTextContent();
+        const pageStrings = textContent.items.map(item => item.str).join(" ").trim();
+
+        if (pageStrings.replace(/\s+/g, "").length > 25) {
+          fullText += `
+--- [صفحة ${pageNum}] ---
+${pageStrings}
+`;
+        } else if (window.Tesseract) {
+          setProgress(true, `مسح ضوئي (OCR عربي) للصفحة المصورة ${pageNum}/${totalPages}...`, pct);
+          const viewport = page.getViewport({ scale: 2.0 });
+          const canvas = document.createElement("canvas");
+          const ctx = canvas.getContext("2d");
+          canvas.width = viewport.width;
+          canvas.height = viewport.height;
+          await page.render({ canvasContext: ctx, viewport }).promise;
+
+          const ocrResult = await Tesseract.recognize(canvas, "ara+eng");
+          const ocrText = (ocrResult.data.text || "").trim();
+          fullText += `
+--- [صفحة ${pageNum} - مستخرج ضوئياً] ---
+${ocrText}
+`;
+        }
+      }
+
+      setProgress(true, `اكتمل استخراج PDF (${totalPages} صفحات)`, 100);
+      return fullText.trim();
+    }
+
+    // 3. Extract Image / Scanned Sheet via Tesseract Arabic+English OCR
+    async function extractImageOcrText(file) {
+      if (!window.Tesseract) {
+        throw new Error("محرك التعرف الضوئي (OCR) غير محمل");
+      }
+      const imageUrl = URL.createObjectURL(file);
+      try {
+        const result = await Tesseract.recognize(imageUrl, "ara+eng", {
+          logger: info => {
+            if (info.status === "recognizing text" && typeof info.progress === "number") {
+              setProgress(true, `التعرف الضوئي على النص العربي (${file.name})...`, info.progress * 100);
+            }
+          }
+        });
+        return (result.data.text || "").trim();
+      } finally {
+        URL.revokeObjectURL(imageUrl);
+      }
+    }
+
+    // 4. Extract Excel (.xlsx / .xls) Sheets
+    async function extractExcelText(file) {
+      if (!window.XLSX) {
+        throw new Error("مكتبة قراءة Excel غير محملة");
+      }
+      const arrayBuffer = await readFileAsArrayBuffer(file);
+      const workbook = XLSX.read(arrayBuffer, { type: "array" });
+      let out = "";
+      workbook.SheetNames.forEach(sheetName => {
+        const sheet = workbook.Sheets[sheetName];
+        const csv = XLSX.utils.sheet_to_csv(sheet, { blankrows: false });
+        if (csv.trim()) {
+          out += `
+=== [ورقة عمل: ${sheetName}] ===
+${csv.trim()}
+`;
+        }
+      });
+      return out.trim();
+    }
+
+    function formatBytes(bytes) {
+      if (!bytes) return "0 B";
+      const k = 1024;
+      const sizes = ["B", "KB", "MB"];
+      const i = Math.floor(Math.log(bytes) / Math.log(k));
+      return parseFloat((bytes / Math.pow(k, i)).toFixed(1)) + " " + sizes[i];
+    }
+
+    function addManualAttachment() {
+      const idx = currentAttachments.length + 1;
+      currentAttachments.push({
+        id: Date.now() + Math.random(),
+        name: `مرفق إضافي رقم (${idx})`,
+        size: "نصي",
+        type: "إدخال يدوي",
+        text: ""
+      });
+      renderAttachments();
+    }
+
+    function renderAttachments() {
+      const container = document.getElementById("attachmentList");
+      if (!container) return;
+      if (currentAttachments.length === 0) {
+        container.innerHTML = `<div style="font-size:12.5px; color:var(--muted); text-align:center; padding:6px;">لا توجد مرفقات مضافة حالياً. ارفع أي ملف أو اكتب النص يدوياً في المربع أدناه.</div>`;
+        return;
+      }
+
+      container.innerHTML = currentAttachments.map((att, idx) => `
+        <div class="attachment-item">
+          <div class="attachment-meta">
+            <span class="attachment-name">${idx + 1}. ${escapeHtml(att.name)}</span>
+            <span class="attachment-info">${escapeHtml(att.type)} • ${escapeHtml(att.size)} • ${(att.text || "").length} حرف مستخرج</span>
+          </div>
+          <div class="btn-group">
+            <button class="btn btn-outline btn-sm" onclick="editAttachmentText(${idx})">عرض / تعديل النص</button>
+            <button class="btn btn-danger btn-sm" onclick="removeAttachment(${idx})">حذف</button>
+          </div>
+        </div>
+      `).join("");
+    }
+
+    function editAttachmentText(idx) {
+      const att = currentAttachments[idx];
+      if (!att) return;
+      const updated = prompt(`النص المستخرج للمرفق: ${att.name}`, att.text || "");
+      if (updated !== null) {
+        att.text = updated;
+        renderAttachments();
+        mergeAllAttachments();
+        showToast("تم تحديث نص المرفق.");
+      }
+    }
+
+    function removeAttachment(idx) {
+      currentAttachments.splice(idx, 1);
+      renderAttachments();
+      showToast("تم حذف المرفق.");
+    }
+
+    function clearAttachments() {
+      currentAttachments = [];
+      renderAttachments();
+      showToast("تم مسح جميع المرفقات.");
+    }
+
+    function appendExtractedText(sourceName, text) {
+      const box = document.getElementById("extractedText");
+      if (!box) return;
+      const sep = box.value.trim() ? "
+
+==============================
+" : "";
+      box.value += `${sep}--- [مرفق: ${sourceName}] ---
+${text.trim()}`;
+      onManualTextInput();
+    }
+
+    function mergeAllAttachments() {
+      if (currentAttachments.length === 0) {
+        showToast("لا توجد مرفقات لدمجها.");
+        return;
+      }
+      const merged = currentAttachments
+        .map((att, i) => `=== مرفق (${i + 1}): ${att.name} ===
+${att.text || ""}`)
+        .join("
+
+");
+      const box = document.getElementById("extractedText");
+      if (box) {
+        box.value = merged;
+        onManualTextInput();
+      }
+      showToast(`تم دمج (${currentAttachments.length}) مرفقات.`);
+    }
+
+    // Realtime listener for manual typing
+    function onManualTextInput() {
+      clearTimeout(autoTypingTimer);
+      autoTypingTimer = setTimeout(() => {
+        autoClassifyFromText(true);
+      }, 400);
+    }
+
+    // Full One-Click Content Analysis & Legal Drafting
+    function analyzeAttachedContentFull() {
+      const text = document.getElementById("extractedText").value.trim();
+      if (!text) {
+        showToast("يرجى كتابة نص الموضوع أو رفع مستند أولاً.");
+        return;
+      }
+      autoClassifyFromText(true);
+      generateFormalDraftTemplate(true);
+      showToast("تم تحليل المحتوى واستخلاص البيانات وصياغة المذكرة القانونية بنجاح.");
+    }
+
+    // Auto-Classification Heuristic Engine
+    function autoClassifyFromText(silent = false) {
+      const textEl = document.getElementById("extractedText");
+      if (!textEl) return;
+      const text = textEl.value.trim();
+      if (!text) {
+        if (!silent) showToast("يرجى إدخال أو استخراج نص المستند أولاً.");
+        return;
+      }
+
+      const docTypeEl = document.getElementById("docType");
+      const lawRefEl = document.getElementById("lawRef");
+
+      if (/دعوى|محكمة|الدائرة|قضاء إداري|هيئة قضايا الدولة|طعن|منطوق|حكم/i.test(text)) {
+        if (/حكم|منطوق|طعن|استئناف|إدارية عليا/i.test(text)) {
+          if (docTypeEl) docTypeEl.value = "مذكرة بشأن حكم قضائي (طعن / تنفيذ)";
+        } else {
+          if (docTypeEl) docTypeEl.value = "مذكرة دفاع لهيئة قضايا الدولة";
+        }
+        if (lawRefEl) lawRefEl.value = "قانون مجلس الدولة رقم 47 لسنة 1972 وقواعد هيئة قضايا الدولة";
+      } else if (/مناقصة|مزايدة|تعاقدات|كراسة شروط|غرامة تأخير|تأمين نهائي|182 لسنة 2018|إسناد/i.test(text)) {
+        if (docTypeEl) {
+          docTypeEl.value = /كراسة|عقد|مسودة/i.test(text)
+            ? "مراجعة عقد / كراسة شروط"
+            : "مذكرة تعاقدات ومناقصات (قانون 182 لسنة 2018)";
+        }
+        if (lawRefEl) lawRefEl.value = "قانون التعاقدات العامة رقم 182 لسنة 2018 ولائحته التنفيذية";
+      } else if (/تظلم|ستين يوماً|60 يوماً|سحب القرار/i.test(text)) {
+        if (docTypeEl) docTypeEl.value = "فحص تظلم إداري (قانون 81 لسنة 2016)";
+        if (lawRefEl) lawRefEl.value = "قانون الخدمة المدنية رقم 81 لسنة 2016 ولائحته التنفيذية";
+      } else if (/تحقيق|مخالفة|إحالة للتحقيق|استجواب|جزاء|إنذار|خصم/i.test(text)) {
+        if (docTypeEl) docTypeEl.value = "مذكرة تحقيق إداري (قانون 81 لسنة 2016)";
+        if (lawRefEl) lawRefEl.value = "قانون الخدمة المدنية رقم 81 لسنة 2016 ولائحته التنفيذية";
+      }
+
+      // Extract Case Number
+      const caseMatch = text.match(/(?:الدعوى|الطعن)\s*رقم\s*([^
+،.]+?\s*لسنة\s*\d+\s*ق[^
+،.]*)/i);
+      if (caseMatch) {
+        const el = document.getElementById("caseNumber");
+        if (el) el.value = caseMatch[1].trim();
+      }
+
+      // Extract Court & Circle
+      const courtMatch = text.match(/(محكمة\s+[^
+،.]+(?:\s*-\s*الدائرة\s+[^
+،.]+)?)/i);
+      if (courtMatch) {
+        const el = document.getElementById("courtCircle");
+        if (el) el.value = courtMatch[1].trim();
+      }
+
+      // Extract Referral Number
+      const refMatch = text.match(/(?:وارد|رقم|كتاب|إحالة)\s*(?:رقم)?\s*[:\-]?\s*(\d+(?:\s*لسنة\s*\d{4})?)/i);
+      if (refMatch) {
+        const el = document.getElementById("referralNumber");
+        if (el) el.value = refMatch[1].trim();
+      }
+
+      // Extract Sender hints
+      const senderMatch = text.match(/(?:وارد من|من|السيد\s*\/\s*مدير|رئيس)\s*[:\-]?\s*([^
+،.]{4,55})/i);
+      if (senderMatch) {
+        const el = document.getElementById("senderEntity");
+        if (el && !el.value.trim()) el.value = senderMatch[1].trim();
+      }
+
+      // Extract Plaintiff / Defendant
+      const plaintiffMatch = text.match(/(?:المقامة من|المدعي|الطاعن)\s*[:\/\-]?\s*([^
+،.]+)/i);
+      if (plaintiffMatch) {
+        const el = document.getElementById("plaintiffName");
+        if (el) el.value = plaintiffMatch[1].trim();
+      }
+      const defendantMatch = text.match(/(?:ضد|المدعى عليه|المطعون ضده)\s*[:\/\-]?\s*([^
+،.]+)/i);
+      if (defendantMatch) {
+        const el = document.getElementById("defendantName");
+        if (el) el.value = defendantMatch[1].trim();
+      }
+
+      // Generate concise archive title
+      const cleanLines = text
+        .split("
+")
+        .map(l => l.trim())
+        .filter(l => l.length > 8 && !l.startsWith("---") && !l.startsWith("==="));
+      const firstLine = cleanLines[0] || "موضوع محال للدراسة القانونية";
+      const shortSnippet = firstLine.slice(0, 65) + (firstLine.length > 65 ? "..." : "");
+      const titleEl = document.getElementById("docTitle");
+      if (titleEl && !titleEl.value.trim()) {
+        const activeType = docTypeEl ? docTypeEl.value : "مذكرة قانونية";
+        titleEl.value = `${activeType}: ${shortSnippet}`;
+      }
+
+      // Populate Facts
+      const cleanedBody = cleanLines.join("
+");
+      const factsEl = document.getElementById("legalFacts");
+      if (factsEl && !factsEl.value.trim() && cleanedBody) {
+        factsEl.value = `تتحصل وقائع الموضوع فيما ورد بالأوراق والمستندات المرفقة والمحالة إلينا، والتي تضمنت الآتي:
+${cleanedBody.slice(0, 2200)}${cleanedBody.length > 2200 ? "
+...(يتبع وفق الثابت بالمرفقات)..." : ""}`;
+      }
+
+      if (!silent) {
+        showToast("تم استخلاص البيانات وصياغة العناوين تلقائياً.");
+      }
+    }
+
+    // Generate Formal Draft Skeleton
+    function generateFormalDraftTemplate(overwrite = false) {
+      const docTypeEl = document.getElementById("docType");
+      const lawRefEl = document.getElementById("lawRef");
+      const recipientEl = document.getElementById("recipientEntity");
+      const caseNumEl = document.getElementById("caseNumber");
+      const courtEl = document.getElementById("courtCircle");
+      const plaintiffEl = document.getElementById("plaintiffName");
+      const defendantEl = document.getElementById("defendantName");
+      const summaryEl = document.getElementById("execSummary");
+      const reasoningEl = document.getElementById("legalReasoning");
+      const conclusionEl = document.getElementById("legalConclusion");
+
+      const docType = docTypeEl ? docTypeEl.value : "";
+      const lawRef = lawRefEl ? lawRefEl.value : "تشريعات الدولة";
+      const recipient = recipientEl && recipientEl.value.trim() ? recipientEl.value.trim() : "السيد الأستاذ / السلطة المختصة";
+      const caseNum = caseNumEl ? caseNumEl.value : "";
+      const court = courtEl ? courtEl.value : "";
+      const plaintiff = plaintiffEl ? plaintiffEl.value : "";
+      const defendant = defendantEl ? defendantEl.value : "";
+
+      if (overwrite || (summaryEl && !summaryEl.value.trim())) {
+        if (summaryEl) {
+          summaryEl.value = `انتهى الرأي القانوني بعد فحص الأوراق والمستندات في ضوء أحكام (${lawRef}) إلى سلامة الإجراءات المتخذة وتوافقها مع صحيح حكم القانون، مع التوصية باتخاذ الإجراء المبين تفصيلاً بالبند ثالثاً.`;
+        }
+      }
+
+      if (overwrite || (reasoningEl && !reasoningEl.value.trim())) {
+        let reasoning = `حيث إنه عن الأساس القانوني للموضوع الماثل، فإنه من المقرر وفقاً لأحكام (${lawRef}) أن الجهة الإدارية تلتزم بإعمال صحيح حكم القانون على الوقائع الثابتة بالأوراق.
+
+`;
+        if (docType.includes("دفاع") || docType.includes("حكم")) {
+          reasoning += `ولما كان الثابت من أوراق ${caseNum || "الدعوى الماثلة"} المنظورة أمام ${court || "المحكمة الموقرة"} والمقامة من السيد/ ${plaintiff || "المدعي"} ضد ${defendant || "الجهة الإدارية بصفتها"}، فإن مسلك الجهة الإدارية جاء متفقاً وصحيح حكم القانون وقائماً على سببه المبرر له قانوناً وواقعاً، مما يضحى معه طلبات المدعي جديرة بالرفض.`;
+        } else if (docType.includes("182")) {
+          reasoning += `وحيث تنص أحكام قانون التعاقدات التي تبرمها الجهات العامة رقم 182 لسنة 2018 ولائحته التنفيذية على التزام المتعاقد بتنفيذ التزاماته التعاقدية في المواعيد ووفق الشروط المتفق عليها بكراسة الشروط والعقد، وإلا حقت عليه الجزاءات المقررة قانوناً.`;
+        } else if (docType.includes("تظلم")) {
+          reasoning += `وحيث إنه وفقاً لنص المادة (65) من قانون الخدمة المدنية رقم 81 لسنة 2016، يُشترط لقبول التظلم شكلاً تقديمه خلال ستين يوماً من تاريخ العلم اليقيني بالقرار المتظلم منه، وبفحص موضوع التظلم تبين قيام القرار على سببه الصحيح المستمد من أصول ثابتة بالأوراق.`;
+        } else if (docType.includes("تحقيق")) {
+          reasoning += `وحيث إنه وفقاً للمواد (57، 58، 60، 61) من قانون الخدمة المدنية رقم 81 لسنة 2016، فقد جرى التحقيق كتابة وسماع أقوال المحال وتحقيق أوجه دفاعه، وثبت من المستندات المرفقة ثبوت المخالفة المنسوبة إليه ثبوتاً يقينياً.`;
+        } else {
+          reasoning += `وبتطبيق القواعد القانونية سالفة البيان على واقعات الإحالة الماثلة ومرفقاتها، يتبين توافر السند القانوني السليم للإجراء المعروض وفقاً للثابت بالأوراق.`;
+        }
+        if (reasoningEl) reasoningEl.value = reasoning;
+      }
+
+      if (overwrite || (conclusionEl && !conclusionEl.value.trim())) {
+        if (conclusionEl) {
+          if (docType.includes("دفاع")) {
+            conclusionEl.value = `لذلك؛ نلتمس من هيئة قضايا الدولة الموقرة التفضل بإيداع هذه المذكرة وحافظة المستندات المرفقة، وطلب الحكم:
+أولاً: بقبول الدفوع الشكلية المبدأة.
+ثانياً: وفي الموضوع برفض الدعوى وإلزام المدعي المصروفات ومقابل أتعاب المحاماة.`;
+          } else {
+            conclusionEl.value = `لذلك؛ نرى عرض الأمر على ${recipient} للتفضل بالموافقة على ما انتهى إليه الرأي القانوني عاليه، وإخطار الجهات المختصة للتنفيذ.`;
+          }
+        }
+      }
+
+      if (!overwrite) {
+        showToast("تم توليد الصياغة القانونية المبدئية.");
+      }
+    }
+
+    // Copy Smart Prompt
+    function copySmartPrompt() {
+      const meta = collectFormData();
+      const promptText = `بصفتك خبيراً في الشئون القانونية المصرية والمرجعية التشريعية الشاملة، يرجى تحليل المستند التالي وصياغة الرد القانوني الرسمي الكامل:
+
+[البيانات الوصفية المستخرجة]
+- نوع المحرر المطلوب: ${meta.docType}
+- المرجعية التشريعية: ${meta.lawRef}
+- الجهة الوارد منها: ${meta.senderEntity || "غير محدد"}
+- الجهة الموجه إليها الرد: ${meta.recipientEntity || "السلطة المختصة"}
+- رقم وتاريخ الإحالة: ${meta.referralNumber || "-"} بتاريخ ${meta.referralDate || "-"}
+- بيانات الدعوى/المحكمة (إن وجدت): ${meta.courtCircle || "-"} | ${meta.caseNumber || "-"} | الخصوم: ${meta.plaintiffName || "-"} ضد ${meta.defendantName || "-"}
+
+[النص المستخرج أو المدون يدوياً]
+${meta.extractedText || "(يرجى إرفاق النص هنا)"}
+
+المطلوب:
+1. ملخص الرأي القانوني التنفيذي.
+2. صياغة المذكرة القانونية الرسمية الكاملة (الديباجة، الوقائع، الأساس القانوني والمواد الحاكمة، التسبيب والدفوع، الرأي/الطلبات الختامية).`;
+
+      navigator.clipboard.writeText(promptText).then(() => {
+        showToast("تم نسخ البرومبت القانوني للحافظة.");
+      }).catch(() => {
+        showToast("تعذر النسخ التلقائي.");
+      });
+    }
+
+    function copyText(elementId) {
+      const el = document.getElementById(elementId);
+      if (!el || !el.value.trim()) return;
+      el.select();
+      document.execCommand("copy");
+      showToast("تم نسخ النص بنجاح.");
+    }
+
+    // Collect & Populate Form
+    function collectFormData() {
+      return {
+        docTitle: document.getElementById("docTitle")?.value.trim() || "",
+        docType: document.getElementById("docType")?.value || "",
+        lawRef: document.getElementById("lawRef")?.value || "",
+        senderEntity: document.getElementById("senderEntity")?.value.trim() || "",
+        recipientEntity: document.getElementById("recipientEntity")?.value.trim() || "",
+        referralNumber: document.getElementById("referralNumber")?.value.trim() || "",
+        referralDate: document.getElementById("referralDate")?.value || "",
+        signerInfo: document.getElementById("signerInfo")?.value.trim() || "",
+        courtCircle: document.getElementById("courtCircle")?.value.trim() || "",
+        caseNumber: document.getElementById("caseNumber")?.value.trim() || "",
+        plaintiffName: document.getElementById("plaintiffName")?.value.trim() || "",
+        defendantName: document.getElementById("defendantName")?.value.trim() || "",
+        extractedText: document.getElementById("extractedText")?.value || "",
+        execSummary: document.getElementById("execSummary")?.value.trim() || "",
+        legalFacts: document.getElementById("legalFacts")?.value.trim() || "",
+        legalReasoning: document.getElementById("legalReasoning")?.value.trim() || "",
+        legalConclusion: document.getElementById("legalConclusion")?.value.trim() || "",
+        drafterName: document.getElementById("drafterName")?.value.trim() || "",
+        approverName: document.getElementById("approverName")?.value.trim() || "",
+        attachments: JSON.parse(JSON.stringify(currentAttachments))
+      };
+    }
+
+    function populateFormData(rec) {
+      const setVal = (id, val) => {
+        const el = document.getElementById(id);
+        if (el) el.value = val || "";
+      };
+      setVal("docTitle", rec.docTitle);
+      setVal("docType", rec.docType);
+      setVal("lawRef", rec.lawRef);
+      setVal("senderEntity", rec.senderEntity);
+      setVal("recipientEntity", rec.recipientEntity);
+      setVal("referralNumber", rec.referralNumber);
+      setVal("referralDate", rec.referralDate);
+      setVal("signerInfo", rec.signerInfo);
+      setVal("courtCircle", rec.courtCircle);
+      setVal("caseNumber", rec.caseNumber);
+      setVal("plaintiffName", rec.plaintiffName);
+      setVal("defendantName", rec.defendantName);
+      setVal("extractedText", rec.extractedText);
+      setVal("execSummary", rec.execSummary);
+      setVal("legalFacts", rec.legalFacts);
+      setVal("legalReasoning", rec.legalReasoning);
+      setVal("legalConclusion", rec.legalConclusion);
+      setVal("drafterName", rec.drafterName);
+      setVal("approverName", rec.approverName);
+      currentAttachments = rec.attachments ? JSON.parse(JSON.stringify(rec.attachments)) : [];
+      renderAttachments();
+    }
+
+    function resetForm() {
+      editingRecordId = null;
+      document.querySelectorAll("#tab-workspace input[type='text'], #tab-workspace textarea").forEach(el => el.value = "");
+      setTodayDate();
+      currentAttachments = [];
+      renderAttachments();
+      updateStats();
+      showToast("تم تهيئة محرر قانوني جديد.");
+    }
+
+    // Save to Archive Ledger
+    function saveCurrentRecord() {
+      const data = collectFormData();
+      if (!data.docTitle) {
+        data.docTitle = `${data.docType} (${data.referralDate || "بدون تاريخ"})`;
+        const titleEl = document.getElementById("docTitle");
+        if (titleEl) titleEl.value = data.docTitle;
+      }
+
+      if (editingRecordId) {
+        const idx = records.findIndex(r => r.id === editingRecordId);
+        if (idx !== -1) {
+          records[idx] = {
+            ...records[idx],
+            ...data,
+            updatedAt: new Date().toISOString()
+          };
+          persistRecords();
+          showToast(`تم تحديث القيد رقم (#${records[idx].seq}) في الأرشيف.`);
+          return;
+        }
+      }
+
+      const newSeq = getNextSeqNumber();
+      const newRecord = {
+        id: "rec_" + Date.now(),
+        seq: newSeq,
+        createdAt: new Date().toISOString(),
+        ...data
+      };
+      records.unshift(newRecord);
+      editingRecordId = newRecord.id;
+      const indicator = document.getElementById("editingIndicator");
+      if (indicator) indicator.textContent = `تعديل القيد (#${newSeq})`;
+      persistRecords();
+      showToast(`تم حفظ المحرر برقم قيد متسلسل (#${newSeq}).`);
+    }
+
+    // Archive Table Rendering
+    function renderArchiveTable() {
+      const tbody = document.getElementById("archiveTableBody");
+      if (!tbody) return;
+      const query = (document.getElementById("archiveSearch")?.value || "").trim().toLowerCase();
+      const typeFilter = document.getElementById("archiveFilterType")?.value || "";
+
+      const filtered = records.filter(r => {
+        const matchesType = !typeFilter || (r.docType || "").includes(typeFilter);
+        const hay = `${r.seq} ${r.docTitle} ${r.docType} ${r.senderEntity} ${r.recipientEntity} ${r.caseNumber} ${r.plaintiffName}`.toLowerCase();
+        const matchesQuery = !query || hay.includes(query);
+        return matchesType && matchesQuery;
+      });
+
+      if (filtered.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="7" style="text-align:center; color:var(--muted); padding:24px;">لا توجد سجلات مطابقة للعرض.</td></tr>`;
+        return;
+      }
+
+      tbody.innerHTML = filtered.map(r => `
+        <tr>
+          <td><strong style="color:var(--primary);">#${escapeHtml(r.seq)}</strong></td>
+          <td>${escapeHtml(r.referralDate || "-")}</td>
+          <td>
+            <div style="font-weight:700; color:var(--text);">${escapeHtml(r.docTitle)}</div>
+            ${r.caseNumber ? `<div style="font-size:12px; color:var(--muted);">الدعوى: ${escapeHtml(r.caseNumber)}</div>` : ""}
+          </td>
+          <td><span class="badge">${escapeHtml(r.docType)}</span></td>
+          <td>
+            <div style="font-size:12.5px;"><strong>إلى:</strong> ${escapeHtml(r.recipientEntity || "-")}</div>
+            <div style="font-size:12px; color:var(--muted);"><strong>من:</strong> ${escapeHtml(r.senderEntity || "-")}</div>
+          </td>
+          <td><span class="badge badge-green">${(r.attachments || []).length} مرفق</span></td>
+          <td>
+            <div class="btn-group">
+              <button class="btn btn-outline btn-sm" onclick="loadRecordForEdit('${r.id}')">فتح</button>
+              <button class="btn btn-outline btn-sm" onclick="previewRecordById('${r.id}')">معاينة</button>
+              <button class="btn btn-primary btn-sm" onclick="exportRecordWordById('${r.id}')">Word</button>
+              <button class="btn btn-accent btn-sm" onclick="exportRecordPDFById('${r.id}')">PDF</button>
+              <button class="btn btn-danger btn-sm" onclick="deleteRecordById('${r.id}')">حذف</button>
+            </div>
+          </td>
+        </tr>
+      `).join("");
+    }
+
+    function loadRecordForEdit(id) {
+      const rec = records.find(r => r.id === id);
+      if (!rec) return;
+      editingRecordId = rec.id;
+      populateFormData(rec);
+      const indicator = document.getElementById("editingIndicator");
+      if (indicator) indicator.textContent = `تعديل القيد (#${rec.seq})`;
+      switchTab("tab-workspace", document.querySelector(".tab-btn"));
+      showToast(`تم فتح القيد (#${rec.seq}) للتعديل.`);
+    }
+
+    function deleteRecordById(id) {
+      const rec = records.find(r => r.id === id);
+      if (!rec) return;
+      if (!confirm(`هل أنت متأكد من حذف القيد رقم (#${rec.seq}) — "${rec.docTitle}"؟`)) return;
+      records = records.filter(r => r.id !== id);
+      if (editingRecordId === id) resetForm();
+      persistRecords();
+      showToast("تم حذف السجل من الأرشيف.");
+    }
+
+    // Build Official HTML Document for Preview, Word, and PDF
+    function buildOfficialDocumentHTML(rec) {
+      const seqLabel = rec.seq ? `قيد أرشيف رقم: ${rec.seq}` : `قيد رقم: ${getNextSeqNumber()}`;
+      const hasLitigation = rec.courtCircle || rec.caseNumber || rec.plaintiffName || rec.defendantName;
+
+      return `
+        <div class="official-paper" dir="rtl">
+          <div class="paper-header">
+            <div>الإدارة العامة للشئون القانونية<br/>قسم الفتوى والعقود والقضايا</div>
+            <div style="text-align:left;">${escapeHtml(seqLabel)}<br/>التاريخ: ${escapeHtml(rec.referralDate || "-")}</div>
+          </div>
+
+          <div class="paper-title">${escapeHtml(rec.docType || "مذكرة قانونية")}</div>
+
+          <table class="paper-meta-table">
+            <tr>
+              <td style="width:22%; font-weight:700; background:#f4f6f9;">الجهة المخاطَبة:</td>
+              <td style="width:28%;">${escapeHtml(rec.recipientEntity || "-")}</td>
+              <td style="width:22%; font-weight:700; background:#f4f6f9;">الجهة الوارد منها:</td>
+              <td style="width:28%;">${escapeHtml(rec.senderEntity || "-")}</td>
+            </tr>
+            <tr>
+              <td style="font-weight:700; background:#f4f6f9;">رقم الإحالة / الوارد:</td>
+              <td>${escapeHtml(rec.referralNumber || "-")}</td>
+              <td style="font-weight:700; background:#f4f6f9;">المرجعية التشريعية:</td>
+              <td>${escapeHtml(rec.lawRef || "-")}</td>
+            </tr>
+            ${rec.signerInfo ? `
+            <tr>
+              <td style="font-weight:700; background:#f4f6f9;">بيانات التوقيع والتأشيرة:</td>
+              <td colspan="3">${escapeHtml(rec.signerInfo)}</td>
+            </tr>` : ""}
+            ${hasLitigation ? `
+            <tr>
+              <td style="font-weight:700; background:#f4f6f9;">المحكمة والدائرة:</td>
+              <td>${escapeHtml(rec.courtCircle || "-")}</td>
+              <td style="font-weight:700; background:#f4f6f9;">رقم الدعوى / الطعن:</td>
+              <td>${escapeHtml(rec.caseNumber || "-")}</td>
+            </tr>
+            <tr>
+              <td style="font-weight:700; background:#f4f6f9;">المدعي / الطاعن:</td>
+              <td>${escapeHtml(rec.plaintiffName || "-")}</td>
+              <td style="font-weight:700; background:#f4f6f9;">المدعى عليه:</td>
+              <td>${escapeHtml(rec.defendantName || "-")}</td>
+            </tr>` : ""}
+          </table>
+
+          ${rec.execSummary ? `
+            <div style="border:1px solid #999; background:#f9f9f9; padding:10px 14px; margin-bottom:14px;">
+              <strong>ملخص الرأي القانوني التنفيذي:</strong>
+              <div class="paper-body" style="margin-top:4px;">${escapeHtml(rec.execSummary)}</div>
+            </div>
+          ` : ""}
+
+          <div class="paper-section-title">أولاً: الوقائع</div>
+          <div class="paper-body">${escapeHtml(rec.legalFacts || "تتحصل وقائع الموضوع فيما ورد بالأوراق المرفقة...")}</div>
+
+          <div class="paper-section-title">ثانياً: الأساس القانوني والتسبيب</div>
+          <div class="paper-body">${escapeHtml(rec.legalReasoning || "")}</div>
+
+          <div class="paper-section-title">ثالثاً: الرأي / الطلبات الختامية</div>
+          <div class="paper-body">${escapeHtml(rec.legalConclusion || "")}</div>
+
+          <div class="paper-sign">
+            <div style="min-width:240px;">
+              ${rec.drafterName ? `<div>مُعد المذكرة<br/>${escapeHtml(rec.drafterName)}</div><br/>` : ""}
+              <div>يُعتمد ،،،<br/>${escapeHtml(rec.approverName || "مدير عام الشئون القانونية")}</div>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    // Preview Modal Controls
+    function previewCurrentRecord() {
+      const rec = collectFormData();
+      if (editingRecordId) {
+        const existing = records.find(r => r.id === editingRecordId);
+        if (existing) rec.seq = existing.seq;
+      }
+      activePreviewRecord = rec;
+      const container = document.getElementById("previewContainer");
+      const modal = document.getElementById("previewModal");
+      if (container) container.innerHTML = buildOfficialDocumentHTML(rec);
+      if (modal) modal.classList.add("open");
+    }
+
+    function previewRecordById(id) {
+      const rec = records.find(r => r.id === id);
+      if (!rec) return;
+      activePreviewRecord = rec;
+      const container = document.getElementById("previewContainer");
+      const modal = document.getElementById("previewModal");
+      if (container) container.innerHTML = buildOfficialDocumentHTML(rec);
+      if (modal) modal.classList.add("open");
+    }
+
+    function closePreviewModal() {
+      const modal = document.getElementById("previewModal");
+      if (modal) modal.classList.remove("open");
+    }
+
+    function exportPreviewedWord() {
+      if (activePreviewRecord) downloadAsWord(activePreviewRecord);
+    }
+
+    function printPreviewedPDF() {
+      if (activePreviewRecord) triggerPrintPDF(activePreviewRecord);
+    }
+
+    function exportCurrentWord() {
+      const rec = collectFormData();
+      if (editingRecordId) {
+        const existing = records.find(r => r.id === editingRecordId);
+        if (existing) rec.seq = existing.seq;
+      }
+      downloadAsWord(rec);
+    }
+
+    function exportRecordWordById(id) {
+      const rec = records.find(r => r.id === id);
+      if (rec) downloadAsWord(rec);
+    }
+
+    function downloadAsWord(rec) {
+      const bodyHtml = buildOfficialDocumentHTML(rec);
+      const wordDoc = `
+        <html xmlns:o='urn:schemas-microsoft-com:office:office'
+              xmlns:w='urn:schemas-microsoft-com:office:word'
+              xmlns='http://www.w3.org/TR/REC-html40' dir='rtl' lang='ar'>
+        <head>
+          <meta charset='utf-8'>
+          <title>${escapeHtml(rec.docTitle || "مذكرة قانونية")}</title>
+          <style>
+            @page { size: A4; margin: 2cm 1.8cm; }
+            body { font-family: "Traditional Arabic", "Arial", serif; direction: rtl; text-align: right; font-size: 16pt; line-height: 1.7; }
+            .paper-header { border-bottom: 2px solid #000; padding-bottom: 8px; margin-bottom: 14px; font-weight: bold; font-size: 13pt; }
+            .paper-title { text-align: center; font-size: 18pt; font-weight: bold; text-decoration: underline; margin: 12px 0; }
+            .paper-meta-table { width: 100%; border-collapse: collapse; margin-bottom: 14px; font-size: 13pt; }
+            .paper-meta-table td { border: 1px solid #333; padding: 5px 8px; }
+            .paper-section-title { font-weight: bold; font-size: 16pt; margin-top: 12px; margin-bottom: 4px; }
+            .paper-body { text-align: justify; white-space: pre-wrap; }
+            .paper-sign { margin-top: 28px; text-align: left; font-weight: bold; }
+          </style>
+        </head>
+        <body>${bodyHtml}</body>
+        </html>
+      `;
+
+      const blob = new Blob(["﻿", wordDoc], { type: "application/msword;charset=utf-8" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      const safeName = (rec.docTitle || "مذكرة_قانونية").replace(/[\/:*?"<>|]/g, "_").slice(0, 50);
+      a.href = url;
+      a.download = `${rec.seq ? rec.seq + "_" : ""}${safeName}.doc`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+      showToast("تم تنزيل ملف Word بنجاح.");
+    }
+
+    function exportCurrentPDF() {
+      const rec = collectFormData();
+      if (editingRecordId) {
+        const existing = records.find(r => r.id === editingRecordId);
+        if (existing) rec.seq = existing.seq;
+      }
+      triggerPrintPDF(rec);
+    }
+
+    function exportRecordPDFById(id) {
+      const rec = records.find(r => r.id === id);
+      if (rec) triggerPrintPDF(rec);
+    }
+
+    function triggerPrintPDF(rec) {
+      const printArea = document.getElementById("print-area");
+      if (!printArea) return;
+      printArea.innerHTML = buildOfficialDocumentHTML(rec);
+      setTimeout(() => {
+        window.print();
+      }, 120);
+    }
+
+    // Preset Legislative Templates
+    function applyPresetTemplate(key) {
+      switchTab("tab-workspace", document.querySelector(".tab-btn"));
+      if (key === "grievance81") {
+        document.getElementById("docType").value = "فحص تظلم إداري (قانون 81 لسنة 2016)";
+        document.getElementById("lawRef").value = "قانون الخدمة المدنية رقم 81 لسنة 2016 ولائحته التنفيذية";
+        document.getElementById("docTitle").value = "مذكرة بفحص تظلم إداري وفقاً للمادة 65 من قانون الخدمة المدنية";
+        document.getElementById("legalReasoning").value =
+          "أولاً: من حيث الشكل:
+حيث إنه لما كانت المادة (65) من قانون الخدمة المدنية الصادر بالقانون رقم 81 لسنة 2016 تقضي بأن للموظف أن يتظلم من القرارات الإدارية الصادرة في شأنه خلال ستين يوماً من تاريخ علمه اليقيني بها، ولما كان الثابت بالأوراق أن المتظلم قد أقام تظلمه بتاريخ (...) من القرار الصادر بتاريخ (...)، فمن ثم يكون التظلم مقبولاً شكلاً لتقديمه في الميعاد المقرر قانوناً.
+
+ثانياً: من حيث الموضوع:
+حيث إنه بفحص أسباب التظلم ومراجعتها على ملف خدمة الموظف والأوراق المرفقة، تبين أن القرار المتظلم منه قد صدر مستوفياً أركانه القانونية وقائماً على سببه الصحيح المستمد من أصول ثابتة بالأوراق، مما يضحى معه التظلم قائماً على غير سند من الواقع أو القانون جديراً بالرفض.";
+        document.getElementById("legalConclusion").value =
+          "لذلك؛ نرى التفضل بالموافقة على:
+أولاً: قبول التظلم شكلاً.
+ثانياً: رفض التظلم موضوعاً لقيام القرار المتظلم منه على سببه الصحيح، وإخطار المتظلم بالنتيجة.";
+      } else if (key === "investigation81") {
+        document.getElementById("docType").value = "مذكرة تحقيق إداري (قانون 81 لسنة 2016)";
+        document.getElementById("lawRef").value = "قانون الخدمة المدنية رقم 81 لسنة 2016 ولائحته التنفيذية";
+        document.getElementById("docTitle").value = "مذكرة تصرف في التحقيق الإداري رقم (...) لسنة 2026";
+        document.getElementById("legalReasoning").value =
+          "حيث إنه من المقرر وفقاً لأحكام المواد (57، 58، 60، 61) من قانون الخدمة المدنية رقم 81 لسنة 2016 ولائحته التنفيذية، أن كل موظف يخرج على مقتضى الواجب في أعمال وظيفته أو يظهر بمظهر من شأنه الإخلال بكرامة الوظيفة يُجازى تأديبياً بعد التحقيق معه كتابة وسماع أقواله وتحقيق دفاعه.
+
+وحيث إنه بسؤال المحال ومواجهته بالمخالفة المنسوبة إليه والمتمثلة في (...)، أقر/دفع بـ (...)، ولما كانت المخالفة ثابتة في حقه يقيناً من واقع المستندات وشهادة الشهود، الأمر الذي يشكل ذنباً إدارياً يستوجب مجازاته.";
+        document.getElementById("legalConclusion").value =
+          "لذلك؛ نقترح عرض الأوراق على السلطة المختصة للتفضل بالموافقة على مجازاة السيد / (...) بـ (...) وإخطار شئون العاملين للتنفيذ.";
+      } else if (key === "contract182") {
+        document.getElementById("docType").value = "مذكرة تعاقدات ومناقصات (قانون 182 لسنة 2018)";
+        document.getElementById("lawRef").value = "قانون التعاقدات العامة رقم 182 لسنة 2018 ولائحته التنفيذية";
+        document.getElementById("docTitle").value = "مذكرة رأي قانوني بشأن إعمال أحكام قانون التعاقدات 182 لسنة 2018";
+        document.getElementById("legalReasoning").value =
+          "حيث إن المادة (48) من قانون تنظيم التعاقدات التي تبرمها الجهات العامة الصادر بالقانون رقم 182 لسنة 2018 تنص على أنه إذا تأخر المتعاقد في تنفيذ العقد عن الميعاد المحدد له، جاز للسلطة المختصة لدواعي المصلحة العامة إعطاؤه مهلة إضافية لإتمام التنفيذ مع توقيع غرامة تأخير بالنسب المقررة قانوناً.
+
+كما تقضي المادة (50) من ذات القانون بفسخ العقد تلقائياً أو التنفيذ على حساب المتعاقد في حالات الإخلال الجوهري بشروط التعاقد ومصادرة التأمين النهائي.";
+        document.getElementById("legalConclusion").value =
+          "لذلك؛ نرى إعمال صحيح حكم المادتين (48) و(50) من القانون رقم 182 لسنة 2018 وتطبيق الغرامة المستحقة خصماً من مستحقات المتعاقد لدى الجهة الإدارية.";
+      } else if (key === "stateLawsuits") {
+        document.getElementById("docType").value = "مذكرة دفاع لهيئة قضايا الدولة";
+        document.getElementById("lawRef").value = "قانون مجلس الدولة رقم 47 لسنة 1972 وقواعد هيئة قضايا الدولة";
+        document.getElementById("recipientEntity").value = "السيد المستشار / رئيس هيئة قضايا الدولة";
+        document.getElementById("docTitle").value = "مذكرة دفاع لهيئة قضايا الدولة في الدعوى رقم (...)";
+        document.getElementById("legalReasoning").value =
+          "أولاً: الدفوع الشكلية:
+ندفع بعدم قبول الدعوى شكلاً لرفعها بعد الميعاد المقرر بالمادة (24) من قانون مجلس الدولة رقم 47 لسنة 1972 (ستون يوماً من تاريخ نشر القرار أو إعلان صاحب الشأن به) / لانتفاء القرار الإداري النهائي.
+
+ثانياً: الدفوع الموضوعية:
+تتمتع الجهة الإدارية بسلطة تقديرية في تنظيم مرفقها العام ما دام قرارها قد خلا من عيب إساءة استعمال السلطة أو الانحراف بها، وقد ثبت من حافظة المستندات المرفقة سلامة الإجراءات ومطابقتها للقانون.";
+        document.getElementById("legalConclusion").value =
+          "لذلك؛ نلتمس من هيئة قضايا الدولة الموقرة التفضل بإيداع هذه المذكرة وحافظة المستندات المرفقة أمام المحكمة الموقرة وطلب الحكم:
+أصلياً: بعدم قبول الدعوى شكلاً.
+واحتياطياً: برفض الدعوى موضوعاً وإلزام المدعي المصروفات ومقابل أتعاب المحاماة.";
+      }
+      showToast("تم تحميل القالب التشريعي في المحرر.");
+    }
+
+    // JSON Backup Export & Import
+    function exportBackupJSON() {
+      const payload = {
+        exportedAt: new Date().toISOString(),
+        app: "Egyptian Legal Workspace",
+        count: records.length,
+        records
+      };
+      const blob = new Blob([JSON.stringify(payload, null, 2)], { type: "application/json;charset=utf-8" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = `سجل_الشئون_القانونية_${new Date().toISOString().slice(0,10)}.json`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+      showToast("تم تصدير النسخة الاحتياطية (JSON).");
+    }
+
+    function importBackupJSON(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = e => {
+        try {
+          const parsed = JSON.parse(e.target.result);
+          const imported = Array.isArray(parsed) ? parsed : (parsed.records || []);
+          if (!Array.isArray(imported)) throw new Error("تنسيق غير صالح");
+          records = imported;
+          persistRecords();
+          showToast(`تم استيراد (${records.length}) سجل بنجاح.`);
+        } catch (err) {
+          showToast("تعذر استيراد الملف: تأكد من صحة ملف النسخة الاحتياطية.");
+        }
+      };
+      reader.readAsText(file, "UTF-8");
+      event.target.value = "";
+    }
+
+    function escapeHtml(str) {
+      if (str === null || str === undefined) return "";
+      return String(str)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(gt = ">")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+    }
+  </script>
+</body>
+</html>
